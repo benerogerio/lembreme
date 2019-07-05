@@ -2,16 +2,19 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Testando Vue" variavel="testando atributos"/>
+    <TesteComp msg="Outro Componente" variavel="variavel nova"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import TesteComp from './components/TesteComp.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    TesteComp
   }
 }
 </script>
