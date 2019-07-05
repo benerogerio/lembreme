@@ -1,8 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h1>{{ variavel }}</h1>
-    <input type="text" placeholder="mensagem" v-model="msg" />
   </div>
 </template>
 
@@ -10,8 +8,7 @@
 export default {
   name: 'TesteComp',
   props: {
-    msg: String,
-    variavel: String
+    msg: String
   }
 }
 </script>
