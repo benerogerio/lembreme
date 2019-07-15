@@ -1,20 +1,12 @@
 <template>
-	<div id="app">
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
-		<h1>Minha Tarefas!</h1>
-		<TodoList/>
-	</div>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
+  </div>
 </template>
-
-<script>
-import TodoList from './components/TodoList.vue'
-
-export default {
-	components: {
-		TodoList
-	}
-}
-</script>
 
 <style>
 #app {
