@@ -19,15 +19,20 @@
         >
           <v-list-item>
             <v-list-item-content>
-              <v-text-field
-                label="Título"
-                hint="Informe o título da anotação"
-                v-model="nota.titulo"></v-text-field>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    class="sm"
+                    label="Título"
+                    hint="Informe o título da anotação"
+                    v-model="nota.titulo"></v-text-field>
 
-              <v-textarea
-                label="Descrição"
-                hint="Informe a descrição da anotação"
-                v-model="nota.desc"></v-textarea>
+                  <v-textarea
+                    label="Descrição"
+                    hint="Informe a descrição da anotação"
+                    v-model="nota.desc"></v-textarea>
+                </v-col>
+              </v-row>
             </v-list-item-content>
           </v-list-item>
       </v-card>
@@ -74,10 +79,12 @@ export default {
         const idx = this.$store.state.notas.map(nota => nota.id).indexOf(this.$route.params.id)
         this.$store.state.notas[idx] = this.nota
       }else{
-        const maiorId = this.$store.getters.getMaiorId
+        let maiorId = this.$store.getters.getMaiorId
         this.nota.id = maiorId + 1
         this.$store.state.notas.push(this.nota)
       }
+
+      localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
 
       this.nota = new Object
       this.$router.push('/')
@@ -101,5 +108,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>

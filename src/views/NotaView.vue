@@ -20,8 +20,6 @@
           <v-icon color="white">mdi-playlist-edit</v-icon>
       </v-btn>
 
-
-
       <v-divider class="mb-3"></v-divider>
 
       <v-card
@@ -30,12 +28,26 @@
           elevation="5"
           tile
         >
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>{{ nota.titulo }}</v-list-item-title>
-              <v-list-item-subtitle>{{ nota.desc }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+          <v-row>
+            <v-col>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-row>
+                    <v-col>
+                      <v-text-field
+                        readonly
+                        v-model="nota.titulo"></v-text-field>
+
+                      <v-textarea
+                          readonly
+                          v-model="nota.desc">
+                      </v-textarea>
+                    </v-col>
+                  </v-row>
+                 </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
       </v-card>
     </div>
 </template>
@@ -43,31 +55,33 @@
 <script>
 export default {
   data(){
-    return{
-      nota:null
-  }
-},
-methods:{
-  abreLista(){
-    this.$router.push('/')
+      return{
+        nota:null
+    }
   },
-  editaNota(){
-    this.$router.push(`/editaNota/${this.nota.id}`)
-  }
-},
-computed:{
-        console(){
-            return{console}
-        },
-        window: () => window
+  methods:{
+    abreLista(){
+      this.$router.push('/')
     },
-created() {
-  this.nota = this.$store.getters.getNotaById(this.$route.params.id)
-}
+    editaNota(){
+      this.$router.push(`/editaNota/${this.nota.id}`)
+    }
+  },
+  computed:{
+          console(){
+              return{console}
+          },
+          window: () => window
+      },
+  created() {
+    this.nota = this.$store.getters.getNotaById(this.$route.params.id)
+  }
 
 }
 </script>
 
 <style>
-
+  v-card {
+    padding: 20px;
+  }
 </style>

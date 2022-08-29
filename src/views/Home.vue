@@ -23,7 +23,7 @@
               <v-icon
                 class="green"
                 dark
-              >mdi-list-status</v-icon>
+              >mdi-note-text-outline</v-icon>
             </v-list-item-avatar>
 
             <v-list-item-content>
@@ -37,10 +37,19 @@
                 <v-icon color="blue lighten-1">mdi-eye</v-icon>
               </v-btn>
             </v-list-item-action>
+
             <v-list-item-action>
-              <v-btn icon>
-                <v-icon color="red lighten-1">mdi-playlist-remove</v-icon>
+              <v-btn icon
+                color="red lighten-2"
+                dark
+                @click="dialog = true; excluiNota(nota.id)"
+              >
+                <v-icon
+                  color="red lighten-1"
+                >mdi-trash-can</v-icon>
               </v-btn>
+
+
             </v-list-item-action>
           </v-list-item>
         </v-list-item-group>
@@ -56,7 +65,7 @@
         right
         fab
         elevation="2"
-        style="padding-botton: 100px"
+        class="pb-20"
         @click="novaNota()"
       >
       <v-icon>mdi-plus</v-icon>
@@ -66,34 +75,33 @@
       v-model="dialog"
       persistent
       max-width="290"
-      activator=""
     >
       <v-card>
         <v-card-title class="text-h5">
-          Use Google's location service?
+          Excluir
         </v-card-title>
-        <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+        <v-card-text>Deseja exlcuir a nota?.</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="green darken-1"
+            color="red darken-1"
             text
             @click="dialog = false"
           >
-            Disagree
+            Cancelar
           </v-btn>
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            @click="confirmaExcluiNota()"
           >
-            Agree
+            Excluir
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
 
+  </div>
 
 </template>
 
@@ -108,15 +116,40 @@ export default {
     novaNota(){
       this.$router.push('/novaNota')
     },
-    verNota(nota){
-      this.$router.push(`/verNota/${nota}`)
+    verNota(idNota){
+      this.$router.push(`/verNota/${idNota}`)
+    },
+    excluiNota(idNota){
+      if(idNota){
+        this.idNota = idNota
+      }
+    },
+    confirmaExcluiNota(){
+
+      let idNota = this.idNota
+      let array = this.$store.state.notas.map(nota => nota.id)
+      let idx = array.indexOf(idNota)
+      if (idx > -1) { // only splice array when item is found
+        this.$store.state.notas.splice(idx, 1); // 2nd parameter means remove one item only
+      }
+
+      localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+
+      this.dialog = false
     }
   },
   data() {
     return{
       dialog: false,
-      notas: this.$store.state.notas
+      notas: this.$store.state.notas,
+      idNota: null
     }
-  }
+  },
+  beforeCreate(){
+    if (localStorage.dbAnote) {
+      this.$store.state.notas = JSON.parse(localStorage.dbAnote)
+    }
+  },
+
 }
 </script>
