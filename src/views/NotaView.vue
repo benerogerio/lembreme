@@ -2,7 +2,7 @@
     <div>
 
       <v-btn
-        color="primary"
+        color="#BBBBFF"
         elevation="2"
         @click="abreLista()"
         class="mb-3 mr-2"
@@ -11,7 +11,7 @@
       </v-btn>
 
       <v-btn
-        color="primary"
+        color="#BBBBFF"
         elevation="2"
         @click="editaNota()"
         class="mb-3"
@@ -40,7 +40,8 @@
 
                       <v-textarea
                           readonly
-                          v-model="nota.desc">
+                          v-model="nota.desc"
+                          auto-grow>
                       </v-textarea>
                     </v-col>
                   </v-row>

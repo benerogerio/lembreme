@@ -7,17 +7,17 @@
 		</v-navigation-drawer> -->
 
 		<v-app-bar
-			color="green"
+			color="#AAAAFF"
 			fixed
 			app>
 			<v-app-bar-title
-				class="white--text">
-				Anote
+				class="app-title white--text">
+				LembreMe
 			</v-app-bar-title>
 		</v-app-bar>
 
 		<!-- Sizes your content based upon application components -->
-		<v-main>
+		<v-main class="app-main">
 
 			<!-- Provides the application the proper gutter -->
 			<v-container fluid>
@@ -30,15 +30,16 @@
 		<v-footer
 			app
 			fixed
+			color="#AAAAFF"
 			>
 			<v-card
-				flat
 				tile
 				width="100%"
-				class="green lighten-1 text-center"
+				class="text-center"
+				color="#CCCCFF"
 			>
 				<v-card-text class="white--text">
-				{{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+				{{ new Date().getFullYear() }} - <i> ikkarus </i>
 				</v-card-text>
 			</v-card>
 		</v-footer>
@@ -48,11 +49,18 @@
 <script>
 
 export default {
-	name:'App'
+	name:'LembreMe'
 }
 </script>
 
 
 <style>
+.app-title {
+  	font-family: "Montez", Times, serif;
+	font-size: 20pt;
+}
 
+.app-main {
+    font-family: "Montserrat", Times, serif;
+  }
 </style>

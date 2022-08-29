@@ -18,25 +18,18 @@
             v-for="nota in notas"
             :key="nota.id"
           >
-
-            <v-list-item-avatar>
+            <v-list-item-avatar @click="verNota(nota.id)">
               <v-icon
-                class="green"
+                color="#AAAAFF"
                 dark
               >mdi-note-text-outline</v-icon>
             </v-list-item-avatar>
 
-            <v-list-item-content>
+            <v-list-item-content @click="verNota(nota.id)">
               <v-list-item-title v-text="nota.titulo"></v-list-item-title>
 
               <v-list-item-subtitle v-text="nota.desc"></v-list-item-subtitle>
             </v-list-item-content>
-
-            <v-list-item-action>
-              <v-btn icon @click="verNota(nota.id)">
-                <v-icon color="blue lighten-1">mdi-eye</v-icon>
-              </v-btn>
-            </v-list-item-action>
 
             <v-list-item-action>
               <v-btn icon
@@ -45,11 +38,9 @@
                 @click="dialog = true; excluiNota(nota.id)"
               >
                 <v-icon
-                  color="red lighten-1"
+                  color="red lighten-2"
                 >mdi-trash-can</v-icon>
               </v-btn>
-
-
             </v-list-item-action>
           </v-list-item>
         </v-list-item-group>
@@ -58,14 +49,14 @@
     </v-list>
 
     <v-btn
-        color="green"
         dark
         fixed
         bottom
         right
         fab
-        elevation="2"
-        class="pb-20"
+        elevation="5"
+        class="mb-15"
+        color="#AAAAFF"
         @click="novaNota()"
       >
       <v-icon>mdi-plus</v-icon>
@@ -80,7 +71,7 @@
         <v-card-title class="text-h5">
           Excluir
         </v-card-title>
-        <v-card-text>Deseja exlcuir a nota?.</v-card-text>
+        <v-card-text>Deseja exlcuir a nota?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -100,7 +91,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
   </div>
 
 </template>
@@ -153,3 +143,7 @@ export default {
 
 }
 </script>
+
+<style>
+
+</style>

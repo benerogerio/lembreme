@@ -1,7 +1,7 @@
 <template>
     <div>
       <v-btn
-        color="primary"
+        color="#BBBBFF"
         elevation="2"
         @click="abreLista()"
         class="mb-3"
@@ -30,7 +30,8 @@
                   <v-textarea
                     label="Descrição"
                     hint="Informe a descrição da anotação"
-                    v-model="nota.desc"></v-textarea>
+                    v-model="nota.desc"
+                    auto-grow></v-textarea>
                 </v-col>
               </v-row>
             </v-list-item-content>
