@@ -56,11 +56,11 @@ export default {
 
 <style>
 .app-title {
-  	font-family: "Montez", Times, serif;
+	font-family: "Montez", Times, serif;
 	font-size: 20pt;
-}
+	}
 
 .app-main {
-    font-family: "Montserrat", Times, serif;
-  }
+	font-family: "Montserrat", Times, serif;
+	}
 </style>

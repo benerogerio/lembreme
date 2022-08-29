@@ -9,14 +9,17 @@
           <v-icon color="white">mdi-arrow-u-left-top</v-icon>
       </v-btn>
 
-      <v-divider></v-divider>
+      <v-divider
+        light
+        class="mb-2"></v-divider>
 
       <v-card
           class="mx-auto mb-3"
           max-width="400"
-          tile
           elevation="5"
+          rounded="20pt"
         >
+        <v-list>
           <v-list-item>
             <v-list-item-content>
               <v-row>
@@ -31,11 +34,13 @@
                     label="Descrição"
                     hint="Informe a descrição da anotação"
                     v-model="nota.desc"
-                    auto-grow></v-textarea>
+                    auto-grow
+                    ></v-textarea>
                 </v-col>
               </v-row>
             </v-list-item-content>
           </v-list-item>
+        </v-list>
       </v-card>
 
       <div
@@ -58,7 +63,6 @@
           >
             <v-icon color="white">mdi-cancel</v-icon>
           </v-btn>
-
         </div>
       </div>
 </template>

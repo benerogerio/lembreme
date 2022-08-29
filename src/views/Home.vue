@@ -8,12 +8,15 @@
         light
         class="mb-2"></v-divider>
 
-      <v-card>
+      <v-card
+        elevation="5"
+        >
         <v-list-item-group
           mandatory
           color="indigo"
         >
 
+        <template v-if="notas.length > 0">
           <v-list-item
             v-for="nota in notas"
             :key="nota.id"
@@ -43,6 +46,15 @@
               </v-btn>
             </v-list-item-action>
           </v-list-item>
+        </template>
+        <template v-else>
+          <v-list-item>
+            Nada aqui ainda.
+            <v-icon
+                color="#AAAAFF"
+                >mdi-emoticon-wink-outline</v-icon>
+          </v-list-item>
+        </template>
         </v-list-item-group>
       </v-card>
 
@@ -55,7 +67,7 @@
         right
         fab
         elevation="5"
-        class="mb-15"
+        class="mb-5"
         color="#AAAAFF"
         @click="novaNota()"
       >

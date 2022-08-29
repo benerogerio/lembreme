@@ -1,6 +1,5 @@
 <template>
     <div>
-
       <v-btn
         color="#BBBBFF"
         elevation="2"
@@ -20,35 +19,35 @@
           <v-icon color="white">mdi-playlist-edit</v-icon>
       </v-btn>
 
-      <v-divider class="mb-3"></v-divider>
+      <v-divider
+        light
+        class="mb-2"></v-divider>
 
       <v-card
-          class="mx-auto"
+          class="mx-auto mb-3"
           max-width="400"
           elevation="5"
-          tile
+          rounded="20pt"
         >
-          <v-row>
-            <v-col>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-row>
-                    <v-col>
-                      <v-text-field
-                        readonly
-                        v-model="nota.titulo"></v-text-field>
+          <v-list>
+            <v-list-item>
+              <v-list-item-content>
+                <v-row>
+                  <v-col>
+                    <v-text-field
+                      readonly
+                      v-model="nota.titulo"></v-text-field>
 
-                      <v-textarea
-                          readonly
-                          v-model="nota.desc"
-                          auto-grow>
-                      </v-textarea>
-                    </v-col>
-                  </v-row>
-                 </v-list-item-content>
-              </v-list-item>
-            </v-col>
-          </v-row>
+                    <v-textarea
+                        readonly
+                        v-model="nota.desc"
+                        auto-grow>
+                    </v-textarea>
+                  </v-col>
+                </v-row>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
       </v-card>
     </div>
 </template>
@@ -82,7 +81,5 @@ export default {
 </script>
 
 <style>
-  v-card {
-    padding: 20px;
-  }
+
 </style>
