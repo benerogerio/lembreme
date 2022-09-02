@@ -25,6 +25,10 @@
 			<!-- If using vue-router -->
 			<router-view></router-view>
 			</v-container>
+
+			<v-container fluid>
+				<AdsGoogle />
+			</v-container>
 		</v-main>
 
 		<v-footer
@@ -48,8 +52,11 @@
 
 <script>
 
+import AdsGoogle from './components/AdsGoogle.vue'
+
 export default {
-	name:'LembreMe'
+	name:'LembreMe',
+	components: { AdsGoogle }
 }
 </script>
 

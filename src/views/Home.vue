@@ -9,7 +9,9 @@
         class="mb-2"></v-divider>
 
       <v-card
+        class="mx-auto"
         elevation="5"
+        max-width="400"
         >
         <v-list-item-group
           mandatory
@@ -17,6 +19,7 @@
         >
 
         <template v-if="notas.length > 0">
+        <draggable v-model="notas" group="notas" :options="{delay:400}" @start="drag=true" @end="drag=false" >
           <v-list-item
             v-for="nota in notas"
             :key="nota.id"
@@ -46,6 +49,7 @@
               </v-btn>
             </v-list-item-action>
           </v-list-item>
+        </draggable>
         </template>
         <template v-else>
           <v-list-item>
@@ -109,11 +113,13 @@
 
 <script>
 
+import draggable from 'vuedraggable'
+
 export default {
   name: 'home',
   components: {
-    // TodoList
-  },
+      draggable,
+    },
   methods:{
     novaNota(){
       this.$router.push('/novaNota')
@@ -143,8 +149,18 @@ export default {
   data() {
     return{
       dialog: false,
-      notas: this.$store.state.notas,
       idNota: null
+    }
+  },
+  computed: {
+    notas: {
+        get() {
+            return this.$store.state.notas
+        },
+        set(value) {
+          this.$store.state.notas = value
+          localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+        }
     }
   },
   beforeCreate(){
