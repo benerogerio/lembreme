@@ -8,7 +8,7 @@ import NotaEdit from './views/NotaEdit'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -29,6 +29,9 @@ export default new Router({
       path: '/verNota/:id',
       name: 'verNota',
       component: NotaView
+    }, {
+      path: '*',
+      redirect: '/'
     }
     // {
     //   path: '/about',

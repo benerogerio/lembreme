@@ -31,7 +31,7 @@
 			</v-container>
 		</v-main>
 
-		<v-footer
+		<!-- <v-footer
 			app
 			fixed
 			color="#AAAAFF"
@@ -46,7 +46,7 @@
 				{{ new Date().getFullYear() }} - <i> ikkarus </i>
 				</v-card-text>
 			</v-card>
-		</v-footer>
+		</v-footer> -->
 	</v-app>
 </template>
 
