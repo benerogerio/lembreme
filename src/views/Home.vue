@@ -167,6 +167,13 @@ export default {
     if (localStorage.dbAnote) {
       this.$store.state.notas = JSON.parse(localStorage.dbAnote)
     }
+
+    // this.console.log(this.$cordova)
+    // window.cordova.plugins.notification.local.schedule([
+    //     { id: 1, title: 'My first notification' },
+    //     { id: 2, title: 'My first notification' }
+    // ]);
+
   },
 
 }
