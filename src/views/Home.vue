@@ -37,6 +37,13 @@
               <v-list-item-subtitle v-text="nota.desc"></v-list-item-subtitle>
             </v-list-item-content>
 
+            <v-list-item-icon v-if="nota.lembrete">
+              <v-icon
+                color="#AAAAFF"
+                dark
+              >mdi-alarm</v-icon>
+            </v-list-item-icon>
+
             <v-list-item-action>
               <v-btn icon
                 color="red lighten-2"
@@ -116,66 +123,54 @@
 import draggable from 'vuedraggable'
 
 export default {
-  name: 'home',
-  components: {
-      draggable,
-    },
-  methods:{
-    novaNota(){
-      this.$router.push('/novaNota')
-    },
-    verNota(idNota){
-      this.$router.push(`/verNota/${idNota}`)
-    },
-    excluiNota(idNota){
-      if(idNota){
-        this.idNota = idNota
-      }
-    },
-    confirmaExcluiNota(){
+	name: 'home',
+	components: {
+		draggable,
+	},
+	data() {
+		return{
+			dialog: false,
+			idNota: null,
+			itvl: 0
+		}
+	},
+	methods:{
+		novaNota(){
+			this.$router.push('/novaNota')
+		},
+		verNota(idNota){
+			this.$router.push(`/verNota/${idNota}`)
+		},
+		excluiNota(idNota){
+			if(idNota){
+				this.idNota = idNota
+			}
+		},
+		confirmaExcluiNota(){
 
-      let idNota = this.idNota
-      let array = this.$store.state.notas.map(nota => nota.id)
-      let idx = array.indexOf(idNota)
-      if (idx > -1) { // only splice array when item is found
-        this.$store.state.notas.splice(idx, 1); // 2nd parameter means remove one item only
-      }
+			let idNota = this.idNota
+			let array = this.$store.state.notas.map(nota => nota.id)
+			let idx = array.indexOf(idNota)
+			if (idx > -1) { // only splice array when item is found
+				this.$store.state.notas.splice(idx, 1); // 2nd parameter means remove one item only
+			}
 
-      localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+			localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
 
-      this.dialog = false
-    }
-  },
-  data() {
-    return{
-      dialog: false,
-      idNota: null
-    }
-  },
-  computed: {
-    notas: {
-        get() {
-            return this.$store.state.notas
-        },
-        set(value) {
-          this.$store.state.notas = value
-          localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
-        }
-    }
-  },
-  beforeCreate(){
-    if (localStorage.dbAnote) {
-      this.$store.state.notas = JSON.parse(localStorage.dbAnote)
-    }
-
-    // this.console.log(this.$cordova)
-    // window.cordova.plugins.notification.local.schedule([
-    //     { id: 1, title: 'My first notification' },
-    //     { id: 2, title: 'My first notification' }
-    // ]);
-
-  },
-
+			this.dialog = false
+		},
+	},
+	computed: {
+		notas: {
+			get() {
+				return this.$store.state.notas
+			},
+			set(value) {
+				this.$store.state.notas = value
+				localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+			}
+		}
+	}
 }
 </script>
 
