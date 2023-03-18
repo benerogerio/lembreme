@@ -1,11 +1,6 @@
 <template>
 	<!-- App.vue -->
-
 	<v-app>
-		<!-- <v-navigation-drawer app>
-
-		</v-navigation-drawer> -->
-
 		<v-app-bar
 			color="#AAAAFF"
 			fixed
@@ -23,32 +18,15 @@
 			<v-container fluid>
 
 				<!-- If using vue-router -->
-				<Transition name="slide-fade" mode="out-in">
+				<v-fade-transition mode="out-in">
 					<router-view></router-view>
-				</Transition>
+				</v-fade-transition>
 			</v-container>
 
 			<v-container fluid>
 				<AdsGoogle />
 			</v-container>
 		</v-main>
-
-		<!-- <v-footer
-			app
-			fixed
-			color="#AAAAFF"
-			>
-			<v-card
-				tile
-				width="100%"
-				class="text-center"
-				color="#CCCCFF"
-			>
-				<v-card-text class="white--text">
-				{{ new Date().getFullYear() }} - <i> ikkarus </i>
-				</v-card-text>
-			</v-card>
-		</v-footer> -->
 	</v-app>
 </template>
 
@@ -58,7 +36,108 @@ import AdsGoogle from './components/AdsGoogle.vue'
 
 export default {
 	name:'LembreMe',
-	components: { AdsGoogle }
+	components: { AdsGoogle },
+	methods:{
+		runBackground(){
+
+			clearInterval(this.itvl)
+			this.itvl = setInterval(() => {
+
+				//captura a hora atual
+				let dataAtual = new Date();
+
+				this.notas.forEach(nota => {
+					if(nota.hasOwnProperty("lembreteSave") && nota.lembreteSave && typeof nota.lembreteSave !== "undefined"
+						&& nota.hasOwnProperty("date") && nota.hasOwnProperty("time")
+						&& nota.date != "" && nota.time != ""){
+
+						// Data do agendamento
+						let dataNota = new Date(nota.date +" "+ nota.time)
+
+						// Compara tempos
+						if(dataNota.getTime() <= dataAtual.getTime()){
+
+							// Dispara notificação
+							window.cordova.plugins.notification.local.schedule({
+								id: nota.id,
+								title: nota.titulo,
+								text: nota.desc,
+								foreground: true
+							});
+
+							// Limpa dados no formulário
+							let notaAux = nota
+							notaAux.lembrete = false
+							notaAux.lembreteSave = false
+							notaAux.date = ''
+							notaAux.time = ''
+
+							// Salva na store
+							const idx = this.$store.state.notas.map(nota => nota.id).indexOf(nota.id)
+							this.notas[idx] = notaAux
+							this.$store.state.notas[idx] = notaAux
+							// Salva no localstorage
+							localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+						}
+					}
+				});
+			}, 10000);
+		}
+	},
+	computed: {
+		notas: {
+			get() {
+				return this.$store.state.notas
+			},
+			set(value) {
+				this.$store.state.notas = value
+				localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+			}
+		}
+	},
+	created(){
+
+		// habilita o start do app automaticamente
+		window.cordova.plugins.autoStart.enable();
+
+		// habilita o app para funcionamento em segundo plano
+		window.cordova.plugins.backgroundMode.enable();
+
+		// window.cordova.plugins.backgroundMode.setDefaults({
+		// 	title: "LembreMe",
+		// 	text: "Rodando",
+		// 	icon: 'ldpi.png', // this will look for icon.png in platforms/android/res/drawable|mipmap
+		// 	color: 'AAAAFF', // hex format like 'F14F4D'
+		// 	resume: true,
+		// 	hidden: true,
+		// 	bigText: true
+		// })
+
+		window.cordova.plugins.notification.local.setDummyNotifications();
+
+		// window.cordova.plugins.backgroundMode.permissionOnTop();
+
+		window.cordova.plugins.backgroundMode.disableBatteryOptimizations();
+
+		window.cordova.plugins.backgroundMode.disableWebViewOptimizations();
+
+		if(!window.cordova.plugins.backgroundMode.isActive() &&
+			// this.notas.length != undefined &&
+			this.notas.length){
+
+			this.runBackground()
+
+		}
+	},
+	beforeCreate(){
+		// Recupera dados do localstorage para o store
+		if (localStorage.dbAnote) {
+			this.$store.state.notas = JSON.parse(localStorage.dbAnote)
+		}
+
+		window.console.log()
+
+	}
 }
 </script>
 
@@ -72,18 +151,4 @@ export default {
 .app-main {
 	font-family: "Montserrat", Times, serif;
 	}
-
-.slide-fade-enter-active {
-  transition: all 0.2s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
 </style>
