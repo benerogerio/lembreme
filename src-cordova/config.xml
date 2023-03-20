@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ikkarus.lembreme" version="1.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ikkarus.lembreme" version="1.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>LembreMe</name>
     <description>Um aplicativo que funciona como um bloco de anotações prático</description>
     <author email="bene.rogerio@hotmail.com" href="">
@@ -17,6 +17,14 @@
         <icon density="xhdpi" src="res/android/xhdpi.png" />
         <icon density="xxhdpi" src="res/android/xxhdpi.png" />
         <icon density="xxxhdpi" src="res/android/xxxhdpi.png" />
+
+        <config-file parent="/*" target="AndroidManifest.xml" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+        </config-file>
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/service[@android:name='com.davidbriglio.foreground.ForegroundService']" xmlns:android="http://schemas.android.com/apk/res/android">
+            <service android:foregroundServiceType="location" />
+        </edit-config>
+
     </platform>
     <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/android/LembreMeSplashscreen.png" />
     <preference name="AndroidWindowSplashScreenBackground" value="#AAAAFF" />
@@ -25,6 +33,8 @@
     <!-- <preference name="BackgroundColor" value="0xff000000" /> -->
     <preference name="ShowTitle" value="true" />
     <preference name="LoadingDialog" value="LembreMe, Bloco de anotações" />
+
+
 
     <!-- <edit-config
         file="app/src/main/AndroidManifest.xml"

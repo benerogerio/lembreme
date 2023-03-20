@@ -43,44 +43,47 @@ export default {
 			clearInterval(this.itvl)
 			this.itvl = setInterval(() => {
 
+				if(this.notas.length){
+
 				//captura a hora atual
 				let dataAtual = new Date();
 
-				this.notas.forEach(nota => {
-					if(nota.hasOwnProperty("lembreteSave") && nota.lembreteSave && typeof nota.lembreteSave !== "undefined"
-						&& nota.hasOwnProperty("date") && nota.hasOwnProperty("time")
-						&& nota.date != "" && nota.time != ""){
+					this.notas.forEach(nota => {
+						if(nota.hasOwnProperty("lembreteSave") && nota.lembreteSave && typeof nota.lembreteSave !== "undefined"
+							&& nota.hasOwnProperty("date") && nota.hasOwnProperty("time")
+							&& nota.date != "" && nota.time != ""){
 
-						// Data do agendamento
-						let dataNota = new Date(nota.date +" "+ nota.time)
+							// Data do agendamento
+							let dataNota = new Date(nota.date +" "+ nota.time)
 
-						// Compara tempos
-						if(dataNota.getTime() <= dataAtual.getTime()){
+							// Compara tempos
+							if(dataNota.getTime() <= dataAtual.getTime()){
 
-							// Dispara notificação
-							window.cordova.plugins.notification.local.schedule({
-								id: nota.id,
-								title: nota.titulo,
-								text: nota.desc,
-								foreground: true
-							});
+								// Dispara notificação
+								window.cordova.plugins.notification.local.schedule({
+									id: nota.id,
+									title: nota.titulo,
+									text: nota.desc,
+									foreground: true
+								});
 
-							// Limpa dados no formulário
-							let notaAux = nota
-							notaAux.lembrete = false
-							notaAux.lembreteSave = false
-							notaAux.date = ''
-							notaAux.time = ''
+								// Limpa dados no formulário
+								let notaAux = nota
+								notaAux.lembrete = false
+								notaAux.lembreteSave = false
+								notaAux.date = ''
+								notaAux.time = ''
 
-							// Salva na store
-							const idx = this.$store.state.notas.map(nota => nota.id).indexOf(nota.id)
-							this.notas[idx] = notaAux
-							this.$store.state.notas[idx] = notaAux
-							// Salva no localstorage
-							localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+								// Salva na store
+								const idx = this.$store.state.notas.map(nota => nota.id).indexOf(nota.id)
+								this.notas[idx] = notaAux
+								this.$store.state.notas[idx] = notaAux
+								// Salva no localstorage
+								localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+							}
 						}
-					}
-				});
+					});
+				}
 			}, 10000);
 		}
 	},
@@ -97,11 +100,19 @@ export default {
 	},
 	created(){
 
+		window.cordova.plugins.notification.local.setDummyNotifications();
+
 		// habilita o start do app automaticamente
 		window.cordova.plugins.autoStart.enable();
 
 		// habilita o app para funcionamento em segundo plano
 		window.cordova.plugins.backgroundMode.enable();
+
+		// window.cordova.plugins.backgroundMode.permissionOnTop();
+
+		window.cordova.plugins.backgroundMode.disableBatteryOptimizations();
+
+		window.cordova.plugins.backgroundMode.disableWebViewOptimizations();
 
 		// window.cordova.plugins.backgroundMode.setDefaults({
 		// 	title: "LembreMe",
@@ -113,30 +124,17 @@ export default {
 		// 	bigText: true
 		// })
 
-		window.cordova.plugins.notification.local.setDummyNotifications();
+		// Foreground service
+		window.cordova.plugins.foregroundService.start('LembreMe', 'Rodando','ldpi');
 
-		// window.cordova.plugins.backgroundMode.permissionOnTop();
+		this.runBackground()
 
-		window.cordova.plugins.backgroundMode.disableBatteryOptimizations();
-
-		window.cordova.plugins.backgroundMode.disableWebViewOptimizations();
-
-		if(!window.cordova.plugins.backgroundMode.isActive() &&
-			// this.notas.length != undefined &&
-			this.notas.length){
-
-			this.runBackground()
-
-		}
 	},
 	beforeCreate(){
 		// Recupera dados do localstorage para o store
 		if (localStorage.dbAnote) {
 			this.$store.state.notas = JSON.parse(localStorage.dbAnote)
 		}
-
-		window.console.log()
-
 	}
 }
 </script>
