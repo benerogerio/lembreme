@@ -11,12 +11,12 @@
     <allow-intent href="https://*/*" />
     <platform name="android">
         <resource-file src="res/android/colors.xml" target="/app/src/main/res/android/colors.xml" />
-        <icon density="ldpi" src="res/android/ldpi.png" />
-        <icon density="mdpi" src="res/android/mdpi.png" />
-        <icon density="hdpi" src="res/android/hdpi.png" />
-        <icon density="xhdpi" src="res/android/xhdpi.png" />
-        <icon density="xxhdpi" src="res/android/xxhdpi.png" />
-        <icon density="xxxhdpi" src="res/android/xxxhdpi.png" />
+        <icon density="ldpi" foreground="res/android/ldpi.png" density="ldpi" background="res/android/bg-ldpi.png"/>
+        <icon density="mdpi" foreground="res/android/mdpi.png" density="mdpi" background="res/android/bg-mdpi.png"/>
+        <icon density="hdpi" foreground="res/android/hdpi.png" density="hdpi" background="res/android/bg-hdpi.png"/>
+        <icon density="xhdpi" foreground="res/android/xhdpi.png" density="xhdpi" background="res/android/bg-xhdpi.png"/>
+        <icon density="xxhdpi" foreground="res/android/xxhdpi.png" density="xxhdpi" background="res/android/bg-xxhdpi.png"/>
+        <icon density="xxxhdpi" foreground="res/android/xxxhdpi.png" density="xxxhdpi" background="res/android/bg-xxxhdpi.png"/>
 
         <config-file parent="/*" target="AndroidManifest.xml" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -24,7 +24,6 @@
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/service[@android:name='com.davidbriglio.foreground.ForegroundService']" xmlns:android="http://schemas.android.com/apk/res/android">
             <service android:foregroundServiceType="location" />
         </edit-config>
-
     </platform>
     <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/android/LembreMeSplashscreen.png" />
     <preference name="AndroidWindowSplashScreenBackground" value="#AAAAFF" />
