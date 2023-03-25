@@ -101,34 +101,23 @@ export default {
 	created(){
 
 		window.cordova.plugins.notification.local.setDummyNotifications();
-
-		// habilita o start do app automaticamente
 		window.cordova.plugins.autoStart.enable();
-
-		// habilita o app para funcionamento em segundo plano
 		window.cordova.plugins.backgroundMode.enable();
-
-		// window.cordova.plugins.backgroundMode.permissionOnTop();
-
+		window.cordova.plugins.backgroundMode.overrideBackButton();
+		window.cordova.plugins.backgroundMode.excludeFromTaskList();
 		window.cordova.plugins.backgroundMode.disableBatteryOptimizations();
-
 		window.cordova.plugins.backgroundMode.disableWebViewOptimizations();
-
-		// window.cordova.plugins.backgroundMode.setDefaults({
-		// 	title: "LembreMe",
-		// 	text: "Rodando",
-		// 	icon: 'ldpi.png', // this will look for icon.png in platforms/android/res/drawable|mipmap
-		// 	color: 'AAAAFF', // hex format like 'F14F4D'
-		// 	resume: true,
-		// 	hidden: true,
-		// 	bigText: true
-		// })
-
-		// Foreground service
-		window.cordova.plugins.foregroundService.start('LembreMe', 'Rodando','ldpi');
+		window.cordova.plugins.backgroundMode.setDefaults({
+			title: "LembreMe",
+			text: "Estou aqui",
+			icon: 'ldpi', // this will look for icon.png in platforms/android/res/drawable|mipmap
+			color: 'AAAAFF', // hex format like 'F14F4D'
+			resume: true,
+			hidden: true,
+			bigText: true
+		})
 
 		this.runBackground()
-
 	},
 	beforeCreate(){
 		// Recupera dados do localstorage para o store
