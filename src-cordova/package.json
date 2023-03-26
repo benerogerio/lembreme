@@ -33,7 +33,7 @@
     "cordova-connectivity-monitor": "^1.2.2",
     "cordova-play-services-version-adapter": "^1.1.0",
     "cordova-plugin-autostart": "^2.3.0",
-    "cordova-plugin-background-mode-fixed-android": "github:mllopart/cordova-plugin-background-mode-uve",
+    "cordova-plugin-background-mode": "github:alexp25/cordova-plugin-background-mode",
     "cordova-plugin-splashscreen": "^6.0.1"
   },
   "dependencies": {
