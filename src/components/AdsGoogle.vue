@@ -16,8 +16,8 @@
       fireBanner() {
         admob.setOptions({
           // publisherId:           "ca-app-pub-6515701583756658~3507694388",  // Required id aplicativo
-          bannerAdId:           "ca-app-pub-6515701583756658/5948604012",  // Required banner id
-          //publisherId:           "ca-app-pub-6515701583756658/5948604012",  // Required banner id
+          //bannerAdId:           "ca-app-pub-6515701583756658/5948604012",  // Required banner id
+          publisherId:           "ca-app-pub-6515701583756658/6475121818",  // Required banner id
           // publisherId:           "ca-app-pub-3940256099942544/6300978111",  // Required Chave de Teste
           //interstitialAdId:      "ca-app-pub-3940256099942544/1033173712",  // Optional
           autoShowBanner:        true,                                      // Optional
