@@ -52,7 +52,7 @@
 								auto-grow>
 							</v-textarea>
 
-							<div v-show="nota.lembrete">
+							<!-- <div v-show="nota.lembrete">
 								<v-row>
 									<v-col>
 										<v-text-field
@@ -71,7 +71,7 @@
 										></v-text-field>
 									</v-col>
 								</v-row>
-							</div>
+							</div> -->
 						</v-col>
 					</v-row>
 				</v-list-item-content>

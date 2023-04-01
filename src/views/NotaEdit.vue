@@ -42,7 +42,7 @@
 									auto-grow>
 								</v-textarea>
 
-								<v-row>
+								<!-- <v-row>
 									<v-checkbox class="ml-5" v-model="nota.lembrete" label="Lembre me?"></v-checkbox>
 
 									<v-icon
@@ -52,9 +52,9 @@
 									>
 										mdi-alarm
 									</v-icon>
-								</v-row>
+								</v-row> -->
 
-								<div v-show="nota.lembrete">
+								<!-- <div v-show="nota.lembrete">
 									<v-row>
 										<v-col>
 											<v-dialog
@@ -144,7 +144,7 @@
 											</v-dialog>
 										</v-col>
 									</v-row>
-								</div>
+								</div> -->
 							</v-col>
 						</v-row>
 					</v-list-item-content>
@@ -188,7 +188,7 @@ data(){
 			id: null,
 			titulo: '',
 			desc: '',
-			lembrete: false,
+			//lembrete: false,
 			lembreteSave: false,
 			date: '',
 			time: '',
@@ -213,13 +213,13 @@ methods:{
 		// Insert ou update
 		if(this.$route.params.id){
 			const idx = this.$store.state.notas.map(nota => nota.id).indexOf(this.$route.params.id)
-			this.nota.lembreteSave = this.nota.lembrete
+			//this.nota.lembreteSave = this.nota.lembrete
 			this.$store.state.notas[idx] = this.nota
 			idNota = this.$route.params.id
 		}else{
 			let maiorId = this.$store.getters.getMaiorId
 			this.nota.id = maiorId + 1
-			this.nota.lembreteSave = this.nota.lembrete
+			//this.nota.lembreteSave = this.nota.lembrete
 			this.$store.state.notas.push(this.nota)
 			idNota = this.nota.id
 		}

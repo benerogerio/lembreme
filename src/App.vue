@@ -44,9 +44,8 @@ export default {
 			this.itvl = setInterval(() => {
 
 				if(this.notas.length){
-
-				//captura a hora atual
-				let dataAtual = new Date();
+					//captura a hora atual
+					let dataAtual = new Date();
 
 					this.notas.forEach(nota => {
 						if(nota.hasOwnProperty("lembreteSave") && nota.lembreteSave && typeof nota.lembreteSave !== "undefined"
@@ -84,7 +83,7 @@ export default {
 						}
 					});
 				}
-			}, 10000);
+			}, 1000);
 		}
 	},
 	computed: {
@@ -110,14 +109,14 @@ export default {
 		window.cordova.plugins.backgroundMode.setDefaults({
 			title: "LembreMe",
 			text: "Estou aqui",
-			icon: 'ldpi', // this will look for icon.png in platforms/android/res/drawable|mipmap
+			//icon: 'ldpi', // this will look for icon.png in platforms/android/res/drawable|mipmap
 			color: 'AAAAFF', // hex format like 'F14F4D'
 			resume: true,
 			hidden: true,
 			bigText: true
 		})
 
-		this.runBackground()
+		// this.runBackground()
 	},
 	beforeCreate(){
 		// Recupera dados do localstorage para o store
