@@ -21,7 +21,7 @@ export default  {
 			})
 
 			this.banner.on('impression', async () => {
-				await this.banner.hide()
+				// await this.banner.hide()
 			})
 
 			await this.banner.show()
