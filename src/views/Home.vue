@@ -159,6 +159,53 @@ export default {
 
 			this.dialog = false
 		},
+		runBackground(){
+
+			// clearInterval(this.itvl)
+			// this.itvl = setInterval(() => {
+
+				if(this.notas.length){
+					//captura a hora atual
+					let dataAtual = new Date();
+
+					this.notas.forEach(nota => {
+						if(nota.hasOwnProperty("lembreteSave") && nota.lembreteSave && typeof nota.lembreteSave !== "undefined"
+							&& nota.hasOwnProperty("date") && nota.hasOwnProperty("time")
+							&& nota.date != "" && nota.time != ""){
+
+							// Data do agendamento
+							let dataNota = new Date(nota.date +" "+ nota.time)
+
+							// Compara tempos
+							if(dataNota.getTime() <= dataAtual.getTime()){
+
+								// Dispara notificação
+								// window.cordova.plugins.notification.local.schedule({
+								// 	id: nota.id,
+								// 	title: nota.titulo,
+								// 	text: nota.desc,
+								// 	foreground: true
+								// });
+
+								// Limpa dados no formulário
+								let notaAux = nota
+								notaAux.lembrete = false
+								notaAux.lembreteSave = false
+								notaAux.date = ''
+								notaAux.time = ''
+
+								// Salva na store
+								const idx = this.$store.state.notas.map(nota => nota.id).indexOf(nota.id)
+								this.notas[idx] = notaAux
+								this.$store.state.notas[idx] = notaAux
+								// Salva no localstorage
+								localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
+							}
+						}
+					});
+				}
+			// }, 1000);
+		}
 	},
 	computed: {
 		notas: {
@@ -170,7 +217,17 @@ export default {
 				localStorage.dbAnote = JSON.stringify(this.$store.state.notas)
 			}
 		}
-	}
+	},
+	created(){
+
+		// var success = function(message) { alert("Success ID: " + JSON.stringify(message)); }
+		// var error = function(message) { alert("Error: " + message); };
+
+		// window.plugins.calendar.listCalendars(success,error)
+
+
+		this.runBackground()
+	},
 }
 </script>
 

@@ -28,13 +28,15 @@
       "admob-plus-cordova": {
         "APP_ID_ANDROID": "ca-app-pub-6515701583756658~3507694388",
         "PLAY_SERVICES_VERSION": "20.6.0"
-      }
+      },
+      "cordova-plugin-calendar": {}
     }
   },
   "devDependencies": {
     "cordova-android": "^11.0.0",
     "cordova-plugin-autostart": "^2.3.0",
     "cordova-plugin-background-mode": "github:alexp25/cordova-plugin-background-mode",
+    "cordova-plugin-calendar": "^5.1.6",
     "cordova-plugin-splashscreen": "^6.0.1"
   },
   "dependencies": {

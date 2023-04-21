@@ -42,7 +42,7 @@
 									auto-grow>
 								</v-textarea>
 
-								<!-- <v-row>
+								<v-row>
 									<v-checkbox class="ml-5" v-model="nota.lembrete" label="Lembre me?"></v-checkbox>
 
 									<v-icon
@@ -52,9 +52,9 @@
 									>
 										mdi-alarm
 									</v-icon>
-								</v-row> -->
+								</v-row>
 
-								<!-- <div v-show="nota.lembrete">
+								<div v-show="nota.lembrete">
 									<v-row>
 										<v-col>
 											<v-dialog
@@ -144,7 +144,7 @@
 											</v-dialog>
 										</v-col>
 									</v-row>
-								</div> -->
+								</div>
 							</v-col>
 						</v-row>
 					</v-list-item-content>
@@ -188,13 +188,14 @@ data(){
 			id: null,
 			titulo: '',
 			desc: '',
-			//lembrete: false,
+			lembrete: false,
 			lembreteSave: false,
-			date: '',
-			time: '',
+			date: null,
+			time: null,
 			attrs: null,
 			on: null
 		},
+		idLembreMe: null,
 		lembrete: false,
 		date: null,
 		modal: false,
@@ -210,18 +211,71 @@ methods:{
 
 		let idNota = null
 
+		if(this.nota.lembrete && (!this.nota.date || !this.nota.time)){
+			alert('Informe data e hora')
+			return
+		}
+
 		// Insert ou update
 		if(this.$route.params.id){
 			const idx = this.$store.state.notas.map(nota => nota.id).indexOf(this.$route.params.id)
-			//this.nota.lembreteSave = this.nota.lembrete
+			this.nota.lembreteSave = this.nota.lembrete
 			this.$store.state.notas[idx] = this.nota
 			idNota = this.$route.params.id
 		}else{
 			let maiorId = this.$store.getters.getMaiorId
 			this.nota.id = maiorId + 1
-			//this.nota.lembreteSave = this.nota.lembrete
+			this.nota.lembreteSave = this.nota.lembrete
 			this.$store.state.notas.push(this.nota)
 			idNota = this.nota.id
+		}
+
+
+		// Adiciona no google Calendar para notificação
+		if(this.nota.lembreteSave){
+
+			const objdata = new Date(this.nota.date +" "+ this.nota.time)
+
+			const dia = objdata.getDate()
+			const mes = objdata.getMonth()
+			const ano = objdata.getFullYear()
+			const hora = objdata.getHours()
+			const minutos = objdata.getMinutes()
+
+			// window.console.log(this.nota.date +" "+ this.nota.time)
+			// window.console.log(dia + '/' + mes + '/' + ano + ' ' + hora + ':' + minutos)
+
+			// prep some variables
+			var startDate = new Date(ano,mes,dia,hora,minutos,0,0,0); // beware: month 0 = january, 11 = december
+			var endDate = new Date(ano,mes,dia,hora,minutos,0,0,0);
+			var title = this.nota.titulo
+			var eventLocation = null; //Home
+			var notes = this.nota.desc;
+
+			// var success = function(message) { window.alert("Success ID: " + JSON.stringify(message)); }
+			var error = function(message) { window.alert("Error: " + message); }
+
+			var getIdLembreMe = (dados) => {
+				return new Promise((resolve) => {
+					var idLembreme = JSON.parse(JSON.stringify(dados)).filter(
+					(obj) => obj.name == 'LembreMe'
+					).shift().id;
+					resolve(idLembreme);
+				});
+			};
+
+			window.plugins.calendar.listCalendars((calendars) => {
+				getIdLembreMe(calendars).then((idLembreMe) => {
+
+					var calOptions = window.plugins.calendar.getCreateCalendarOptions()
+					calOptions.calendarName = "LembreMe"
+					calOptions.calendarColor = "#AAAAFF"
+					calOptions.firstReminderMinutes = 1
+					calOptions.calendarId = parseInt(idLembreMe)
+
+					window.plugins.calendar.createEventWithOptions(title,eventLocation,notes,startDate,endDate,calOptions,null,error);
+				});
+			}, error);
 		}
 
 		// Salva no localstorage

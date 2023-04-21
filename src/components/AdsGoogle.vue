@@ -10,9 +10,9 @@ export default  {
 			banner: null
 		}
 	},
-	created(){
-		//if(Window.cordova) // se cordova definido dispara banner
-		return this.fireBanner()
+	mounted(){
+		if(window.cordova) // se cordova definido dispara banner
+			return this.fireBanner()
 	},
 	methods : {
 		async fireBanner() {
